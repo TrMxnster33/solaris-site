@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#fff9e8">
+  <meta name="description" content="Solaris Minecraft sunucusu ve oyuncu topluluğu. Birlikte keşfet, inşa et ve oyuna katıl.">
+  <title>Solaris — Minecraft ve topluluk</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="Solaris ana sayfa">
+      <span class="brand-mark" aria-hidden="true">✳</span><span>SOLARIS</span>
+    </a>
+    <nav class="nav-links" aria-label="Ana menü">
+      <a href="#home">Ana sayfa</a>
+      <a href="#community">Topluluk</a>
+      <a href="#minecraft">Minecraft</a>
+      <a href="#ozellikler">Özellikler</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="button button-quiet" data-open-auth="login">Giriş yap</button>
+      <button class="button button-dark" data-open-auth="register">Bize katıl <span aria-hidden="true">↗</span></button>
+    </div>
+    <button class="button button-quiet theme-toggle" type="button" aria-label="Renk temasını değiştir">☾</button>
+    <button class="mobile-menu" aria-label="Menüyü aç" aria-expanded="false">☰</button>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="hero-copy">
+        <div class="eyebrow"><span class="status-dot"></span> MINECRAFT SUNUCUSU · TOPLULUK</div>
+        <h1>Blok blok<br>bir dünya<span class="sun-dot">.</span></h1>
+        <p class="hero-text">Maceralara katıl, kendi hikâyeni inşa et ve Solaris topluluğunda yeni arkadaşlar edin. Oyun da sohbet de aynı yerde.</p>
+        <div class="hero-actions">
+          <a class="button button-dark button-large" href="#minecraft">Sunucuya göz at <span aria-hidden="true">↗</span></a>
+          <button class="button button-quiet" data-open-auth="register">Topluluğa katıl</button>
+        </div>
+        <div class="member-note"><span class="avatar-stack"><i>☀</i><i>✦</i><i>◉</i></span><span>Güzel insanlar, güzel anlar.</span></div>
+      </div>
+      <div class="hero-art" aria-label="Solaris güneş illüstrasyonu">
+        <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+        <div class="sun-core"><span>☀</span></div>
+        <div class="orbit-label label-top">EST. 2026</div>
+        <div class="orbit-label label-bottom">BİRLİKTE DAHA PARLAK</div>
+        <span class="spark spark-a">✳</span><span class="spark spark-b">✦</span><span class="spark spark-c">✧</span>
+      </div>
+      <div class="hero-index"><span>01</span><span class="index-line"></span><span>SOLARIS MINECRAFT</span></div>
+    </section>
+
+    <section class="ticker" aria-label="Solaris değerleri">
+      <div class="ticker-track"><span>HAYAL ET</span><b>✳</b><span>İNŞA ET</span><b>✳</b><span>KEŞFET</span><b>✳</b><span>BİRLİKTE OYNA</span><b>✳</b><span>HAYAL ET</span><b>✳</b><span>İNŞA ET</span></div>
+    </section>
+
+    <section class="community-section section-wrap" id="community">
+      <div class="section-heading">
+        <div><div class="eyebrow">SOLARIS TOPLULUĞU</div><h2>Oyun birlikte güzel.</h2></div>
+        <p>Yeni oyuncularla tanış, projelerini paylaş ve Solaris'te kendine bir ekip bul. Hesabını oluşturup topluluğa ilk adımını at.</p>
+      </div>
+      <div class="community-grid">
+        <article class="community-card"><span>01</span><h3>Tanış</h3><p>Ortak oyun zevkine sahip kişilerle aynı toplulukta buluş.</p></article>
+        <article class="community-card"><span>02</span><h3>Birlikte üret</h3><p>Yapılarını, fikirlerini ve yeni maceralarını paylaş.</p></article>
+        <article class="community-card"><span>03</span><h3>Katıl</h3><p>Solaris hesabını oluştur; yeni dünyalardan haberdar ol.</p></article>
+      </div>
+      <button class="button button-dark" data-open-auth="register">Topluluğa katıl <span aria-hidden="true">↗</span></button>
+    </section>
+
+    <section class="minecraft section-wrap" id="minecraft">
+      <div class="minecraft-copy">
+        <div class="eyebrow">SOLARIS DÜNYASINA GİR</div>
+        <h2>Macera burada başlıyor.</h2>
+        <p>Arkadaşlarınla keşfet, üret ve kendine ait bir yer kur. Sunucu adresi ve sürüm bilgisi burada görünür olduğunda tek tıkla kopyalayabilirsin.</p>
+        <div class="server-address"><span class="server-status-dot"></span><code id="minecraft-address">Sunucu bilgisi hazırlanıyor…</code><button class="copy-address" id="copy-address" type="button" aria-label="Sunucu adresini kopyala">Kopyala</button></div>
+        <p class="server-version" id="minecraft-version"></p>
+        <button class="button button-dark button-large" data-open-auth="register">Topluluğa katıl <span aria-hidden="true">↗</span></button>
+      </div>
+      <div class="minecraft-art" aria-hidden="true"><div class="block block-grass"><span></span></div><div class="block block-stone"></div><div class="block block-gold"></div><div class="pixel-spark">✦</div><div class="pixel-caption">YOUR NEXT<br>ADVENTURE</div></div>
+    </section>
+
+    <section class="features section-wrap" id="ozellikler">
+      <div class="section-heading">
+        <div><div class="eyebrow">OYUNDA VE DIŞINDA</div><h2>Birlikte daha iyi.</h2></div>
+        <p>Yeni dünyalar keşfet, yaratıcı projeler üret ve Solaris topluluğuyla oyun dışında da bağlantıda kal.</p>
+      </div>
+      <div class="feature-grid">
+        <article class="feature-card card-yellow"><div class="feature-icon">⚒</div><span class="card-number">01 / MINECRAFT</span><h3>Kendi dünyan</h3><p>Keşfet, kaynak topla ve hayalindeki yapıları Solaris dünyasında inşa et.</p><span class="card-decoration">☀</span></article>
+        <article class="feature-card card-cream"><div class="feature-icon">◉</div><span class="card-number">02 / TOPLULUK</span><h3>Birlikte oyna</h3><p>Yeni oyuncularla tanış, ekip kur ve maceralarını paylaş.</p><span class="card-decoration">✦</span></article>
+        <article class="feature-card card-dark"><div class="feature-icon">↗</div><span class="card-number">03 / GÜVEN</span><h3>Güvenli başlangıç</h3><p>E-posta doğrulamasıyla hesabını koru, Solaris'e güvenle katıl.</p><span class="card-decoration">✳</span></article>
+      </div>
+    </section>
+
+    <section class="join-banner">
+      <div class="banner-star">✳</div>
+      <div><div class="eyebrow">GÜNEŞLİ TARAF SENİ BEKLİYOR</div><h2>Sen de aramıza katıl.</h2></div>
+      <button class="button button-dark button-large" data-open-auth="register">Hesabını oluştur <span aria-hidden="true">↗</span></button>
+    </section>
+  </main>
+
+  <footer class="footer"><a class="brand" href="/"><span class="brand-mark">✳</span><span>SOLARIS</span></a><span>İyi enerji, güzel insanlar.</span><button class="privacy-settings" type="button">Gizlilik tercihleri</button><span>© 2026 SOLARIS</span></footer>
+
+  <div class="modal-backdrop" id="auth-backdrop" hidden>
+    <section class="auth-modal" role="dialog" aria-modal="true" aria-labelledby="auth-title">
+      <button class="modal-close" aria-label="Pencereyi kapat">×</button>
+      <div class="modal-brand"><span class="brand-mark">✳</span> SOLARIS</div>
+      <div id="auth-content"></div>
+    </section>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <section class="consent-banner" id="consent-banner" aria-label="Analitik izni" hidden>
+    <div><strong>Gizliliğin önemli.</strong><p>İzin verirsen IP adresi, sayfa, cihaz, tarayıcı/dil bilgisi, yönlendiren sitenin alan adı ve tarih/saat ziyaretçi istatistikleri için en fazla 90 gün saklanır. Analitik çerezini reddedebilir veya tercihini değiştirebilirsin.</p></div>
+    <div class="consent-actions"><button type="button" class="button button-quiet" data-consent="reject">Reddet</button><button type="button" class="button button-dark" data-consent="accept">Kabul et</button></div>
+  </section>
+</body>
+</html>
