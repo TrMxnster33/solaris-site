@@ -33,7 +33,7 @@ def load_env():
 
 load_env()
 DATABASE = Path(os.environ.get("SOLARIS_DB", ROOT / "solaris.db"))
-HOST = os.environ.get("HOST", "127.0.0.1")
+HOST = os.environ.get("HOST", "0.0.0.0")
 PORT = int(os.environ.get("PORT", "8000"))
 SESSION_SECONDS = 7 * 24 * 60 * 60
 CODE_SECONDS = 10 * 60
