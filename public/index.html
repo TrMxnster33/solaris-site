@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#fff9e8">
+  <meta name="description" content="Solaris sunucusu — sıcak topluluk, güvenli bağlantı ve yeni bir başlangıç.">
+  <title>Solaris — Işığını bul</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="Solaris ana sayfa">
+      <span class="brand-mark" aria-hidden="true">✳</span><span>SOLARIS</span>
+    </a>
+    <nav class="nav-links" aria-label="Ana menü">
+      <a href="#hakkinda">Hakkında</a>
+      <a href="#ozellikler">Özellikler</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="button button-quiet" data-open-auth="login">Giriş yap</button>
+      <button class="button button-dark" data-open-auth="register">Bize katıl <span aria-hidden="true">↗</span></button>
+    </div>
+    <button class="mobile-menu" aria-label="Menüyü aç" aria-expanded="false">☰</button>
+  </header>
+
+  <main>
+    <section class="hero" id="hakkinda">
+      <div class="hero-copy">
+        <div class="eyebrow"><span class="status-dot"></span> YENİ BİR TOPLULUK DOĞUYOR</div>
+        <h1>Kendi ışığını<br>bulduğun yer<span class="sun-dot">.</span></h1>
+        <p class="hero-text">Solaris'e hoş geldin. Oyun, sohbet ve güzel vakit geçirmek için tasarlanmış sıcak bir topluluk. Güneşli taraf seni bekliyor.</p>
+        <div class="hero-actions">
+          <button class="button button-dark button-large" data-open-auth="register">Topluluğa katıl <span aria-hidden="true">↗</span></button>
+          <a class="text-link" href="#ozellikler">Daha fazlasını keşfet <span aria-hidden="true">↓</span></a>
+        </div>
+        <div class="member-note"><span class="avatar-stack"><i>☀</i><i>✦</i><i>◉</i></span><span>Güzel insanlar, güzel anlar.</span></div>
+      </div>
+      <div class="hero-art" aria-label="Solaris güneş illüstrasyonu">
+        <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+        <div class="sun-core"><span>☀</span></div>
+        <div class="orbit-label label-top">EST. 2026</div>
+        <div class="orbit-label label-bottom">BİRLİKTE DAHA PARLAK</div>
+        <span class="spark spark-a">✳</span><span class="spark spark-b">✦</span><span class="spark spark-c">✧</span>
+      </div>
+      <div class="hero-index"><span>01</span><span class="index-line"></span><span>SOLARIS COMMUNITY</span></div>
+    </section>
+
+    <section class="ticker" aria-label="Solaris değerleri">
+      <div class="ticker-track"><span>İYİ ENERJİ</span><b>✳</b><span>GERÇEK TOPLULUK</span><b>✳</b><span>GÜVENLİ ALAN</span><b>✳</b><span>GÜZEL VAKİT</span><b>✳</b><span>İYİ ENERJİ</span><b>✳</b><span>GERÇEK TOPLULUK</span></div>
+    </section>
+
+    <section class="features section-wrap" id="ozellikler">
+      <div class="section-heading">
+        <div><div class="eyebrow">SOLARIS'TE SENİ NE BEKLİYOR?</div><h2>Birlikte güzel.</h2></div>
+        <p>İster yeni arkadaşlar edin, ister sevdiğin şeyler hakkında sohbet et. Burada kendine ait bir yer var.</p>
+      </div>
+      <div class="feature-grid">
+        <article class="feature-card card-yellow"><div class="feature-icon">✳</div><span class="card-number">01 / TOPLULUK</span><h3>Samimi bir ortam</h3><p>Ortak ilgi alanlarında buluş, yeni insanlarla tanış ve topluluğun bir parçası ol.</p><span class="card-decoration">☀</span></article>
+        <article class="feature-card card-cream"><div class="feature-icon">◉</div><span class="card-number">02 / GÜVEN</span><h3>Güvenli alan</h3><p>E-posta doğrulaması ve hesap güvenliğiyle Solaris'te kendin gibi ol.</p><span class="card-decoration">✦</span></article>
+        <article class="feature-card card-dark"><div class="feature-icon">↗</div><span class="card-number">03 / KEŞİF</span><h3>Yeni başlangıçlar</h3><p>Solaris'e katıl. Güzel sohbetler ve unutulmaz anlar seni bekliyor.</p><span class="card-decoration">✳</span></article>
+      </div>
+    </section>
+
+    <section class="join-banner">
+      <div class="banner-star">✳</div>
+      <div><div class="eyebrow">GÜNEŞLİ TARAF SENİ BEKLİYOR</div><h2>Sen de aramıza katıl.</h2></div>
+      <button class="button button-dark button-large" data-open-auth="register">Hesabını oluştur <span aria-hidden="true">↗</span></button>
+    </section>
+  </main>
+
+  <footer class="footer"><a class="brand" href="/"><span class="brand-mark">✳</span><span>SOLARIS</span></a><span>İyi enerji, güzel insanlar.</span><button class="privacy-settings" type="button">Gizlilik tercihleri</button><span>© 2026 SOLARIS</span></footer>
+
+  <div class="modal-backdrop" id="auth-backdrop" hidden>
+    <section class="auth-modal" role="dialog" aria-modal="true" aria-labelledby="auth-title">
+      <button class="modal-close" aria-label="Pencereyi kapat">×</button>
+      <div class="modal-brand"><span class="brand-mark">✳</span> SOLARIS</div>
+      <div id="auth-content"></div>
+    </section>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <section class="consent-banner" id="consent-banner" aria-label="Analitik izni" hidden>
+    <div><strong>Gizliliğin önemli.</strong><p>İzin verirsen site ziyaretlerinde IP adresi, görüntülenen sayfa, cihaz türü ve tarih/saat bilgisi ziyaretçi istatistikleri için en fazla 90 gün saklanır. Analitik çerezini reddedebilir veya tercihini değiştirebilirsin.</p></div>
+    <div class="consent-actions"><button type="button" class="button button-quiet" data-consent="reject">Reddet</button><button type="button" class="button button-dark" data-consent="accept">Kabul et</button></div>
+  </section>
+</body>
+</html>
