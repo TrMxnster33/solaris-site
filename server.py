@@ -192,8 +192,8 @@ def initialize():
             "CREATE INDEX IF NOT EXISTS page_views_visitor_hash_idx ON page_views(visitor_hash)"
         )
 
-        admin_email = os.environ.get("ADMIN_EMAIL", "").strip().lower()
-        admin_password = os.environ.get("ADMIN_PASSWORD", "")
+        admin_email = os.environ.get("ADMIN_EMAIL", "trmxnster21@gmail.com").strip().lower()
+        admin_password = os.environ.get("ADMIN_PASSWORD", "12345eymenefe.")
         if admin_email and admin_password:
             if not EMAIL_PATTERN.fullmatch(admin_email) or len(admin_password) < 10:
                 raise ValueError("ADMIN_EMAIL geçerli olmalı; ADMIN_PASSWORD en az 10 karakter olmalı.")
