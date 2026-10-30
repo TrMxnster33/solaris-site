@@ -23,7 +23,7 @@
     </nav>
     <div class="nav-actions">
       <button class="button button-quiet" data-open-auth="login">Giriş yap</button>
-      <button class="button button-dark" data-open-auth="register">Bize katıl <span aria-hidden="true">↗</span></button>
+      <button class="button button-dark" data-open-auth="register">Kayıt ol <span aria-hidden="true">↗</span></button>
     </div>
     <button class="button button-quiet theme-toggle" type="button" aria-label="Renk temasını değiştir">☾</button>
     <button class="mobile-menu" aria-label="Menüyü aç" aria-expanded="false">☰</button>
@@ -88,7 +88,7 @@
       <div class="feature-grid">
         <article class="feature-card card-yellow"><div class="feature-icon">⚒</div><span class="card-number">01 / MINECRAFT</span><h3>Kendi dünyan</h3><p>Keşfet, kaynak topla ve hayalindeki yapıları Solaris dünyasında inşa et.</p><span class="card-decoration">☀</span></article>
         <article class="feature-card card-cream"><div class="feature-icon">◉</div><span class="card-number">02 / TOPLULUK</span><h3>Birlikte oyna</h3><p>Yeni oyuncularla tanış, ekip kur ve maceralarını paylaş.</p><span class="card-decoration">✦</span></article>
-        <article class="feature-card card-dark"><div class="feature-icon">↗</div><span class="card-number">03 / GÜVEN</span><h3>Güvenli başlangıç</h3><p>E-posta doğrulamasıyla hesabını koru, Solaris'e güvenle katıl.</p><span class="card-decoration">✳</span></article>
+        <article class="feature-card card-dark"><div class="feature-icon">↗</div><span class="card-number">03 / GÜVEN</span><h3>Oyun Entegrasyonu</h3><p>Oyundaki adın ve parolanla siteye anında giriş yap.</p><span class="card-decoration">✳</span></article>
       </div>
     </section>
 
@@ -101,14 +101,59 @@
 
   <footer class="footer"><a class="brand" href="/"><span class="brand-mark">✳</span><span>SOLARIS</span></a><span>İyi enerji, güzel insanlar.</span><button class="privacy-settings" type="button">Gizlilik tercihleri</button><span>© 2026 SOLARIS</span></footer>
 
+  <!-- Giriş / Kayıt Modalı -->
   <div class="modal-backdrop" id="auth-backdrop" hidden>
     <section class="auth-modal" role="dialog" aria-modal="true" aria-labelledby="auth-title">
       <button class="modal-close" aria-label="Pencereyi kapat">×</button>
       <div class="modal-brand"><span class="brand-mark">✳</span> SOLARIS</div>
-      <div id="auth-content"></div>
+      
+      <div id="auth-content">
+        <div class="auth-header" style="margin-bottom: 20px;">
+          <h2 id="auth-title" style="font-size: 1.5rem; margin-bottom: 10px;">Solaris'e Giriş Yap</h2>
+          <div class="auth-tabs" style="display: flex; gap: 10px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px;">
+            <button type="button" id="tab-login" class="button button-dark" style="flex: 1;">Giriş Yap</button>
+            <button type="button" id="tab-register" class="button button-quiet" style="flex: 1;">Kayıt Ol</button>
+          </div>
+        </div>
+
+        <!-- Giriş Formu -->
+        <form id="login-form" class="auth-form" style="display: flex; flex-direction: column; gap: 15px;">
+          <div class="input-group" style="display: flex; flex-direction: column; gap: 5px;">
+            <label style="font-size: 0.85rem; opacity: 0.8;">Oyuncu Adı</label>
+            <input type="text" id="login-username" placeholder="Minecraft kullanıcı adın" required autocomplete="username" style="padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.2); color: inherit;">
+          </div>
+          <div class="input-group" style="display: flex; flex-direction: column; gap: 5px;">
+            <label style="font-size: 0.85rem; opacity: 0.8;">Parola</label>
+            <input type="password" id="login-password" placeholder="Oyun parolan" required autocomplete="current-password" style="padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.2); color: inherit;">
+          </div>
+          <button type="submit" class="button button-dark" style="width: 100%; margin-top: 10px;">Giriş Yap</button>
+          <p id="login-error" class="error-text" style="color: #ff6b6b; font-size: 0.85rem; text-align: center; margin: 0;"></p>
+        </form>
+
+        <!-- Kayıt Formu (Başlangıçta gizli) -->
+        <form id="register-form" class="auth-form" style="display: none; flex-direction: column; gap: 15px;">
+          <div class="input-group" style="display: flex; flex-direction: column; gap: 5px;">
+            <label style="font-size: 0.85rem; opacity: 0.8;">Oyuncu Adı</label>
+            <input type="text" id="reg-username" placeholder="Minecraft kullanıcı adın" required autocomplete="username" style="padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.2); color: inherit;">
+          </div>
+          <div class="input-group" style="display: flex; flex-direction: column; gap: 5px;">
+            <label style="font-size: 0.85rem; opacity: 0.8;">Parola</label>
+            <input type="password" id="reg-password" placeholder="En az 4 karakter" required autocomplete="new-password" style="padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.2); color: inherit;">
+          </div>
+          <div class="input-group" style="display: flex; flex-direction: column; gap: 5px;">
+            <label style="font-size: 0.85rem; opacity: 0.8;">Parola Tekrarı</label>
+            <input type="password" id="reg-password-confirm" placeholder="Parolayı tekrar gir" required autocomplete="new-password" style="padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.2); color: inherit;">
+          </div>
+          <button type="submit" class="button button-dark" style="width: 100%; margin-top: 10px;">Kayıt Ol</button>
+          <p id="reg-error" class="error-text" style="color: #ff6b6b; font-size: 0.85rem; text-align: center; margin: 0;"></p>
+          <p id="reg-success" class="success-text" style="color: #51cf66; font-size: 0.85rem; text-align: center; margin: 0;"></p>
+        </form>
+      </div>
     </section>
   </div>
+
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  
   <section class="consent-banner" id="consent-banner" aria-label="Analitik izni" hidden>
     <div><strong>Gizliliğin önemli.</strong><p>İzin verirsen IP adresi, sayfa, cihaz, tarayıcı/dil bilgisi, yönlendiren sitenin alan adı ve tarih/saat ziyaretçi istatistikleri için en fazla 90 gün saklanır. Analitik çerezini reddedebilir veya tercihini değiştirebilirsin.</p></div>
     <div class="consent-actions"><button type="button" class="button button-quiet" data-consent="reject">Reddet</button><button type="button" class="button button-dark" data-consent="accept">Kabul et</button></div>
