@@ -60,7 +60,10 @@ def mysql_db():
         database=MYSQL_DATABASE,
         user=MYSQL_USER,
         password=MYSQL_PASSWORD,
-        timeout=10
+        ssl_disabled=False,
+        ssl_verify_cert=False,
+        timeout=15
+    )
     )
 
 
