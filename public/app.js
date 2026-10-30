@@ -23,7 +23,7 @@ async function api(path, body) {
   try {
     result = await response.json();
   } catch {
-    throw new Error("Solaris sunucusundan geçerli yanıt alınamadı. Siteyi `python server.py` ile açın.");
+    throw new Error("Solaris sunucusundan geçerli yanıt alınamadı. Siteyi kontrol edin.");
   }
   if (!response.ok) throw new Error(result.error || "Bir hata oluştu.");
   return result;
@@ -56,55 +56,104 @@ function updateNavigation(user) {
 
 function renderLogin(message = "") {
   content.innerHTML = `
-    <h2 id="auth-title">Solaris'e dön.</h2>
-    <p class="auth-intro">Minecraft hesabını bağlamak için oyun sunucusundan aldığın tek kullanımlık kodu gir. Oyun parolan istenmez.</p>
-    ${message ? `<p class="auth-message">${message}</p>` : ""}
-    <form class="auth-form" id="login-form">
-      <label class="field">Oyuncu adı<input name="username" autocomplete="username" maxlength="16" required></label>
-      <label class="field">Tek kullanımlık kod<input name="code" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" autocomplete="one-time-code" required></label>
-      <button class="button button-dark" type="submit">Giriş yap <span>↗</span></button>
+    <div class="auth-header" style="margin-bottom: 20px;">
+      <h2 id="auth-title" style="font-size: 1.5rem; margin-bottom: 10px;">Solaris'e Giriş Yap</h2>
+      <div class="auth-tabs" style="display: flex; gap: 10px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px;">
+        <button type="button" id="tab-login" class="button button-dark" style="flex: 1;">Giriş Yap</button>
+        <button type="button" id="tab-register" class="button button-quiet" style="flex: 1;" data-switch="register">Kayıt Ol</button>
+      </div>
+    </div>
+    ${message ? `<p class="auth-message" style="color: #ff6b6b; font-size: 0.85rem; margin-bottom: 10px;">${message}</p>` : ""}
+    <form class="auth-form" id="login-form" style="display: flex; flex-direction: column; gap: 15px;">
+      <div class="input-group" style="display: flex; flex-direction: column; gap: 5px;">
+        <label style="font-size: 0.85rem; opacity: 0.8;">Oyuncu Adı</label>
+        <input type="text" name="username" placeholder="Minecraft kullanıcı adın" required autocomplete="username" maxlength="16" style="padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.2); color: inherit;">
+      </div>
+      <div class="input-group" style="display: flex; flex-direction: column; gap: 5px;">
+        <label style="font-size: 0.85rem; opacity: 0.8;">Parola</label>
+        <input type="password" name="password" placeholder="Oyun parolan" required autocomplete="current-password" style="padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.2); color: inherit;">
+      </div>
+      <button type="submit" class="button button-dark" style="width: 100%; margin-top: 10px;">Giriş Yap <span>↗</span></button>
     </form>
-    <p class="auth-switch">Hesabını henüz bağlamadın mı? <button type="button" data-switch="register">Hesap bağla</button></p>`;
-  content.querySelector("#login-form").addEventListener("submit", async (event) => {
-    event.preventDefault();
-    const form = new FormData(event.currentTarget);
-    try {
-      await api("/api/minecraft/login", {
-        username: String(form.get("username")).trim(),
-        code: String(form.get("code")).trim(),
-      });
-      location.reload();
-    } catch (error) {
-      renderLogin(error.message);
-    }
-  });
+    <p class="auth-switch" style="text-align: center; margin-top: 15px; font-size: 0.9rem;">Hesabın yok mu? <button type="button" data-switch="register" style="background: none; border: none; color: var(--accent, #ffd700); cursor: pointer; text-decoration: underline;">Kayıt ol</button></p>`;
+  
+  bindAuthEvents();
 }
 
 function renderRegister(message = "") {
   content.innerHTML = `
-    <h2 id="auth-title">Hesabını bağla.</h2>
-    <p class="auth-intro">Önce Minecraft sunucusuna girip hesap bağlama komutunu kullan. Gelen kısa süreli kodu buraya yaz; oyun parolan istenmez.</p>
-    ${message ? `<p class="auth-message">${message}</p>` : ""}
-    <form class="auth-form" id="register-form">
-      <label class="field">Minecraft oyuncu adı<input name="username" autocomplete="username" maxlength="16" required></label>
-      <label class="field">Tek kullanımlık bağlama kodu<input name="code" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" autocomplete="one-time-code" required></label>
-      <button class="button button-dark" type="submit">Hesabı güvenle bağla <span>↗</span></button>
+    <div class="auth-header" style="margin-bottom: 20px;">
+      <h2 id="auth-title" style="font-size: 1.5rem; margin-bottom: 10px;">Solaris'e Kayıt Ol</h2>
+      <div class="auth-tabs" style="display: flex; gap: 10px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px;">
+        <button type="button" id="tab-login" class="button button-quiet" style="flex: 1;" data-switch="login">Giriş Yap</button>
+        <button type="button" id="tab-register" class="button button-dark" style="flex: 1;">Kayıt Ol</button>
+      </div>
+    </div>
+    ${message ? `<p class="auth-message" style="color: #ff6b6b; font-size: 0.85rem; margin-bottom: 10px;">${message}</p>` : ""}
+    <form class="auth-form" id="register-form" style="display: flex; flex-direction: column; gap: 15px;">
+      <div class="input-group" style="display: flex; flex-direction: column; gap: 5px;">
+        <label style="font-size: 0.85rem; opacity: 0.8;">Oyuncu Adı</label>
+        <input type="text" name="username" placeholder="Minecraft kullanıcı adın" required autocomplete="username" maxlength="16" style="padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.2); color: inherit;">
+      </div>
+      <div class="input-group" style="display: flex; flex-direction: column; gap: 5px;">
+        <label style="font-size: 0.85rem; opacity: 0.8;">Parola</label>
+        <input type="password" name="password" placeholder="En az 4 karakter" required autocomplete="new-password" style="padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.2); color: inherit;">
+      </div>
+      <div class="input-group" style="display: flex; flex-direction: column; gap: 5px;">
+        <label style="font-size: 0.85rem; opacity: 0.8;">Parola Tekrarı</label>
+        <input type="password" name="password_confirm" placeholder="Parolayı tekrar gir" required autocomplete="new-password" style="padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.2); color: inherit;">
+      </div>
+      <button type="submit" class="button button-dark" style="width: 100%; margin-top: 10px;">Kayıt Ol <span>↗</span></button>
     </form>
-    <p class="auth-switch">Hesabın zaten bağlı mı? <button type="button" data-switch="login">Kodla giriş yap</button></p>`;
-  content.querySelector("#register-form").addEventListener("submit", async (event) => {
-    event.preventDefault();
-    const form = new FormData(event.currentTarget);
-    try {
-      const result = await api("/api/minecraft/register", {
-        username: String(form.get("username")).trim(),
-        code: String(form.get("code")).trim(),
-      });
-      showToast(result.message || "Minecraft hesabın Solaris'e bağlandı.");
-      renderLogin();
-    } catch (error) {
-      renderRegister(error.message);
-    }
-  });
+    <p class="auth-switch" style="text-align: center; margin-top: 15px; font-size: 0.9rem;">Zaten hesabın var mı? <button type="button" data-switch="login" style="background: none; border: none; color: var(--accent, #ffd700); cursor: pointer; text-decoration: underline;">Giriş yap</button></p>`;
+  
+  bindAuthEvents();
+}
+
+function bindAuthEvents() {
+  const loginForm = content.querySelector("#login-form");
+  if (loginForm) {
+    loginForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const form = new FormData(event.currentTarget);
+      try {
+        await api("/api/login", {
+          username: String(form.get("username")).trim(),
+          password: String(form.get("password")),
+        });
+        location.reload();
+      } catch (error) {
+        renderLogin(error.message);
+      }
+    });
+  }
+
+  const registerForm = content.querySelector("#register-form");
+  if (registerForm) {
+    registerForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const form = new FormData(event.currentTarget);
+      const password = String(form.get("password"));
+      const password_confirm = String(form.get("password_confirm"));
+
+      if (password !== password_confirm) {
+        renderRegister("Parolalar birbiriyle eşleşmiyor.");
+        return;
+      }
+
+      try {
+        const result = await api("/api/register", {
+          username: String(form.get("username")).trim(),
+          password: password,
+          password_confirm: password_confirm,
+        });
+        showToast(result.message || "Kayıt başarılı! Şimdi giriş yapabilirsiniz.");
+        renderLogin();
+      } catch (error) {
+        renderRegister(error.message);
+      }
+    });
+  }
 }
 
 document.addEventListener("click", (event) => {
@@ -226,7 +275,7 @@ async function renderDashboard(user) {
     form.className = "auth-form";
     form.innerHTML = `
       <label class="field">Mevcut parola<input name="old_password" type="password" autocomplete="current-password" required></label>
-      <label class="field">Yeni parola (en az 10 karakter)<input name="new_password" type="password" minlength="10" autocomplete="new-password" required></label>
+      <label class="field">Yeni parola (en az 4 karakter)<input name="new_password" type="password" minlength="4" autocomplete="new-password" required></label>
       <button class="button button-dark" type="submit">Parolayı güncelle</button>`;
     form.addEventListener("submit", async (event) => {
       event.preventDefault();
@@ -253,14 +302,13 @@ async function renderDashboard(user) {
     summaryPanel.append(dashboardElement("h2", "", "Genel bakış"));
     const metrics = dashboardElement("div", "analytics-metrics");
     summaryPanel.append(metrics);
-    summaryPanel.append(dashboardElement("p", "empty-state", "Aktif ziyaretçi: son 5 dakika içinde görülen tekil ziyaretçiler. Konum tahmini için ziyaretçi IP'si üçüncü taraf servislere gönderilmez."));
+    summaryPanel.append(dashboardElement("p", "empty-state", "Aktif ziyaretçi: son 5 dakika içinde görülen tekil ziyaretçiler."));
     const visitsPanel = dashboardElement("section", "admin-tab-panel");
     visitsPanel.dataset.panel = "visits";
     visitsPanel.append(dashboardElement("h2", "", "Ziyaretler ve kaynak bilgisi"));
-    visitsPanel.append(dashboardElement("p", "empty-state", "Şehir/ülke bilgisi GeoIP veritabanı olmadan belirlenemez. Kaynak alanı yönlendiren sitenin alan adını gösterir."));
     const membersPanel = dashboardElement("section", "admin-tab-panel");
     membersPanel.dataset.panel = "members";
-    membersPanel.append(dashboardElement("h2", "", "Doğrulanmış e-posta adresleri"));
+    membersPanel.append(dashboardElement("h2", "", "Doğrulanmış üyeler"));
     tabContent.append(summaryPanel, visitsPanel, membersPanel);
     section.append(tabs, tabContent);
 
@@ -303,31 +351,13 @@ async function renderDashboard(user) {
         metric.append(dashboardElement("strong", "", String(value)));
         metrics.append(metric);
       });
-      visitsPanel.append(setTable(
-        ["SAYFA", "IP ADRESİ", "CİHAZ", "KAYNAK", "TARAYICI", "DİL", "TARİH / SAAT"],
-        data.visits.map((visit) => [
-          visit.page,
-          visit.ip_address,
-          visit.device_type,
-          visit.referrer || "Doğrudan",
-          visit.user_agent.slice(0, 140),
-          visit.language,
-          formatTime(visit.visited_at),
-        ]),
-        "Henüz onaylı analitik ziyareti yok."
-      ));
-      membersPanel.append(setTable(
-        ["AD", "E-POSTA", "KAYIT TARİHİ"],
-        data.verified_emails.map((member) => [member.name, member.email, formatTime(member.created_at, false)]),
-        "Henüz doğrulanmış üye yok."
-      ));
     } catch (error) {
       summaryPanel.append(dashboardElement("p", "auth-message", error.message));
     }
   } else {
     const card = dashboardElement("section", "dashboard-card");
     card.append(dashboardElement("h2", "", "Solaris'e hoş geldin!"));
-    card.append(dashboardElement("p", "empty-state", "E-posta adresin doğrulandı. Ana menüden Minecraft dünyasını veya topluluk sayfasını keşfedebilirsin."));
+    card.append(dashboardElement("p", "empty-state", "Oyuncu hesabınla giriş yaptın. Ana menüden Minecraft dünyasını veya topluluk sayfasını keşfedebilirsin."));
     section.append(card);
   }
   main.prepend(section);
