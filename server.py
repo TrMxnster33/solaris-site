@@ -64,7 +64,6 @@ def mysql_db():
         ssl_verify_cert=False,
         timeout=15
     )
-    )
 
 
 def db():
